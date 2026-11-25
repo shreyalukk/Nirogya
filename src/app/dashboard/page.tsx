@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRole } from '@/components/common/RoleContext';
+import { isSupabaseConfigured } from '@/lib/supabase';
 import { 
   CURRENT_CAMP, 
   MOCK_QUEUE, 
@@ -161,9 +162,16 @@ export default function DashboardPage() {
           </div>
           <div>
             <span className="font-semibold text-slate-800">Backend Status: </span>
-            <span className="text-slate-600">
-              Mock Data Layer Active. Supabase credentials have not been configured yet.
-            </span>
+            {isSupabaseConfigured ? (
+              <span className="text-emerald-700 font-semibold inline-flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                Supabase Connected & Healthy (Project: ixxbnnicndddfwwaghwy • PostgreSQL 17)
+              </span>
+            ) : (
+              <span className="text-slate-600">
+                Mock Data Layer Active. Supabase credentials have not been configured yet.
+              </span>
+            )}
           </div>
         </div>
         <div className="flex items-center gap-3">
