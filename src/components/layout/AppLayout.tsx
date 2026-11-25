@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import DemoBanner from '../common/DemoBanner';
@@ -8,6 +9,14 @@ import { RoleProvider } from '../common/RoleContext';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const pathname = usePathname();
+
+  // If on the public 3D landing page (root '/'), render clean without dashboard sidebar
+  const isLandingPage = pathname === '/';
+
+  if (isLandingPage) {
+    return <>{children}</>;
+  }
 
   return (
     <RoleProvider>
